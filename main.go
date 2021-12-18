@@ -10,7 +10,7 @@ import (
 func main() {
 	l := logger.NewLogger()
 	fr := sap_api_input_reader.NewFileReader()
-	inoutSDC := fr.ReadSDC("./Inputs/SDC_Sales_Scheduling_Item_sample.json")
+	inoutSDC := fr.ReadSDC("./Inputs/SDC_Sales_Scheduling_Agreement_Item_sample.json")
 	caller := sap_api_caller.NewSAPAPICaller(
 		"https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/", l,
 	)
@@ -23,8 +23,8 @@ func main() {
 	}
 
 	caller.AsyncGetSalesSchedulingAgreement(
-		inoutSDC.SalesSchedulingAgreement.SchedulingAgreement,
-		inoutSDC.SalesSchedulingAgreement.PurchaseSchedulingAgreementItem.SchedulingAgreementItem,
+		inoutSDC.SalesSchedulingAgreement.SalesSchedulingAgreement,
+		inoutSDC.SalesSchedulingAgreement.SalesSchedulingAgreementItem.SalesSchedulingAgreementItem,
 		accepter,
 	)
 }

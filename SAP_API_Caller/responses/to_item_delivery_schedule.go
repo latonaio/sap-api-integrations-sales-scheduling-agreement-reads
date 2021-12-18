@@ -1,6 +1,6 @@
 package responses
 
-type ToItemDeliverySchdule struct {
+type ToItemDeliverySchedule struct {
 	D struct {
 		Results []struct {
 			Metadata struct {

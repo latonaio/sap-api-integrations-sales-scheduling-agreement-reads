@@ -46,13 +46,13 @@ Latona および AION の SAP 関連リソースでは、Inputs フォルダ下�
 * sample.jsonの記載例(1)  
 
 accepter において 下記の例のように、データの種別（＝APIの種別）を指定します。  
-ここでは、"Header", "Item" が指定されています。
+ここでは、"Header" が指定されています。
 
 ```
-"api_schema": "sap.s4.beh.schedulingagreement.v1.SchedulingAgreement.Created.v1",
-"accepter": ["Header"],
-"scheduling_agreement": "1",
-"deleted": false
+	"api_schema": "sap.s4.beh.salesschedulingagreement.v1.SalesSchedulingAgreement.Created.v1",
+	"accepter": ["Header"],
+	"sales_scheduling_agreement": "30000001",
+	"deleted": false
 ```
   
 * 全データを取得する際のsample.jsonの記載例(2)  
@@ -60,10 +60,10 @@ accepter において 下記の例のように、データの種別（＝APIの�
 全データを取得する場合、sample.json は以下のように記載します。  
 
 ```
-"api_schema": "sap.s4.beh.schedulingagreement.v1.SchedulingAgreement.Created.v1",
-"accepter": ["All"],
-"scheduling_agreement": "1",
-"deleted": false
+	"api_schema": "sap.s4.beh.salesschedulingagreement.v1.SalesSchedulingAgreement.Created.v1",
+	"accepter": ["All"],
+	"sales_scheduling_agreement": "30000001",
+	"deleted": false
 ```
 
 ## 指定されたデータ種別のコール
@@ -72,19 +72,19 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetPurchaseSchedulingAgreement(schedulingAgreement, schedulingAgreementItem string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetSalesSchedulingAgreement(salesSchedulingAgreement, salesSchedulingAgreementItem string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "Header":
 			func() {
-				c.Header(schedulingAgreement)
+				c.Header(salesSchedulingAgreement)
 				wg.Done()
 			}()
 		case "Item":
 			func() {
-				c.Item(schedulingAgreement, schedulingAgreementItem)
+				c.Item(salesSchedulingAgreement, salesSchedulingAgreementItem)
 				wg.Done()
 			}()
 		default:
@@ -98,14 +98,55 @@ func (c *SAPAPICaller) AsyncGetPurchaseSchedulingAgreement(schedulingAgreement, 
 ## Output  
 本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
 以下の sample.json の例は、SAP 販売分納契約 の ヘッダデータ が取得された結果の JSON の例です。  
-以下の項目のうち、"SchedulingAgreement" ～ "ToHeaderPartner" は、/SAP_API_Output_Formatter/type.go 内 の Type Product {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
+以下の項目のうち、"SalesSchedulingAgreement" ～ "to_SchedgAgrmtItm" は、/SAP_API_Output_Formatter/type.go 内 の Type Product {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-sales-scheduling-agreement-reads/SAP_API_Caller/caller.go#L50",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-sales-scheduling-agreement-reads/SAP_API_Caller/caller.go#L58",
 	"function": "sap-api-integrations-sales-scheduling-agreement-reads/SAP_API_Caller.(*SAPAPICaller).Header",
 	"level": "INFO",
-	"message": "[{SalesOrder:1 SalesOrderType:OR SalesOrganization:1710 DistributionChannel:10 OrganizationDivision:00 SalesGroup: SalesOffice: SalesDistrict: SoldToParty:17100001 CreationDate:/Date(1471392000000)/ LastChangeDate:/Date(1472774400000)/ ExternalDocumentID: LastChangeDateTime:/Date(1472796947125+0000)/ PurchaseOrderByCustomer:gfh CustomerPurchaseOrderDate: SalesOrderDate:/Date(1471392000000)/ TotalNetAmount:52.65 OverallDeliveryStatus:C TotalBlockStatus: OverallOrdReltdBillgStatus: OverallSDDocReferenceStatus: TransactionCurrency:USD SDDocumentReason: PricingDate:/Date(1471392000000)/ PriceDetnExchangeRate:1.00000 RequestedDeliveryDate:/Date(1471392000000)/ ShippingCondition:01 CompleteDeliveryIsDefined:false ShippingType: HeaderBillingBlockReason: DeliveryBlockReason: IncotermsClassification:EXW CustomerPriceGroup: PriceListType: CustomerPaymentTerms:0004 PaymentMethod: ReferenceSDDocument: ReferenceSDDocumentCategory: CustomerAccountAssignmentGroup:01 AccountingExchangeRate:0.00000 CustomerGroup:01 AdditionalCustomerGroup1: AdditionalCustomerGroup2: AdditionalCustomerGroup3: AdditionalCustomerGroup4: AdditionalCustomerGroup5: CustomerTaxClassification1: TotalCreditCheckStatus: BillingDocumentDate:/Date(1471392000000)/ ToHeaderPartner:https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_ORDER_SRV/A_SalesOrder('1')/to_Partner}]",
-	"time": "2021-12-11T15:33:00.054455+09:00"
+	"message": [
+		{
+			"SalesSchedulingAgreement": "30000001",
+			"SalesSchedgAgrmtType": "LKJ",
+			"CreationDate": "/Date(1621468800000)/",
+			"LastChangeDate": "",
+			"SalesOrganization": "1710",
+			"DistributionChannel": "10",
+			"OrganizationDivision": "00",
+			"SalesGroup": "",
+			"SalesOffice": "",
+			"SoldToParty": "USCU_AU2",
+			"SalesSchedgAgrmtDate": "/Date(1621468800000)/",
+			"SDDocumentReason": "",
+			"PurchaseOrderByCustomer": "AU2-PO-JIT-001",
+			"CustomerPurchaseOrderType": "",
+			"CustomerPurchaseOrderDate": "",
+			"SalesDistrict": "",
+			"TotalNetAmount": "210000.00",
+			"TransactionCurrency": "USD",
+			"PricingDate": "/Date(1621468800000)/",
+			"ShippingType": "",
+			"ShippingCondition": "01",
+			"IncotermsVersion": "",
+			"DeliveryBlockReason": "09",
+			"DelivSchedTypeMRPRlvnceCode": "E",
+			"AgrmtValdtyStartDate": "",
+			"AgrmtValdtyEndDate": "",
+			"HeaderBillingBlockReason": "",
+			"CustomerPaymentTerms": "",
+			"PaymentMethod": "",
+			"OverallSDProcessStatus": "B",
+			"OverallSDDocumentRejectionSts": "A",
+			"TotalBlockStatus": "C",
+			"OverallDeliveryStatus": "B",
+			"OverallDeliveryBlockStatus": "C",
+			"OverallBillingBlockStatus": "",
+			"TotalCreditCheckStatus": "",
+			"to_SchAgrmtPartner": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_SCHEDULING_AGREEMENT/A_SalesSchedgAgrmt('30000001')/to_Partner",
+			"to_SchedgAgrmtItm": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_SCHEDULING_AGREEMENT/A_SalesSchedgAgrmt('30000001')/to_Item"
+		}
+	],
+	"time": "2021-12-18T16:24:37.196603+09:00"
 }
 ```

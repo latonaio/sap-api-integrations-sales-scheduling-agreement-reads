@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	sap_api_output_formatter "sap-api-integrations-purchase-scheduling-agreement-reads/SAP_API_Output_Formatter"
+	sap_api_output_formatter "sap-api-integrations-sales-scheduling-agreement-reads/SAP_API_Output_Formatter"
 	"strings"
 	"sync"
 
@@ -26,19 +26,19 @@ func NewSAPAPICaller(baseUrl string, l *logger.Logger) *SAPAPICaller {
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetPurchaseSchedulingAgreement(schedulingAgreement, schedulingAgreementItem string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetSalesSchedulingAgreement(salesSchedulingAgreement, salesSchedulingAgreementItem string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "Header":
 			func() {
-				c.Header(schedulingAgreement)
+				c.Header(salesSchedulingAgreement)
 				wg.Done()
 			}()
 		case "Item":
 			func() {
-				c.Item(schedulingAgreement, schedulingAgreementItem)
+				c.Item(salesSchedulingAgreement, salesSchedulingAgreementItem)
 				wg.Done()
 			}()
 		default:
@@ -49,8 +49,8 @@ func (c *SAPAPICaller) AsyncGetPurchaseSchedulingAgreement(schedulingAgreement, 
 	wg.Wait()
 }
 
-func (c *SAPAPICaller) Header(schedulingAgreement string) {
-	headerData, err := c.callPurchaseSchedulingAgreementSrvAPIRequirementHeader("A_SchAgrmtHeader", schedulingAgreement)
+func (c *SAPAPICaller) Header(salesSchedulingAgreement string) {
+	headerData, err := c.callSalesSchedulingAgreementSrvAPIRequirementHeader("A_SalesSchedgAgrmt", salesSchedulingAgreement)
 	if err != nil {
 		c.log.Error(err)
 		return
@@ -71,28 +71,35 @@ func (c *SAPAPICaller) Header(schedulingAgreement string) {
 	}
 	c.log.Info(itemData)
 	
-	itemScheduleLineData, err := c.callToItemScheduleLine(itemData[0].ToItemScheduleLine)
+	itemDeliveryScheduleData, err := c.callToItemDeliverySchedule(itemData[0].ToItemDeliverySchedule)
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+	c.log.Info(itemDeliveryScheduleData)
+
+	itemScheduleLineData, err := c.callToItemScheduleLine(itemDeliveryScheduleData[0].ToItemScheduleLine)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
 	c.log.Info(itemScheduleLineData)
 
-	itemDeliveryAddressData, err := c.callToItemDeliveryAddress(itemData[0].ToItemDeliveryAddress)
+	itemPricingElementData, err := c.callToItemPricingElement(itemData[0].ToItemPricingElement)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
-	c.log.Info(itemDeliveryAddressData)
-
+	c.log.Info(itemPricingElementData)
+	
 }
 
-func (c *SAPAPICaller) callPurchaseSchedulingAgreementSrvAPIRequirementHeader(api, schedulingAgreement string) ([]sap_api_output_formatter.Header, error) {
-	url := strings.Join([]string{c.baseURL, "API_SCHED_AGRMT_PROCESS_SRV", api}, "/")
+func (c *SAPAPICaller) callSalesSchedulingAgreementSrvAPIRequirementHeader(api, salesSchedulingAgreement string) ([]sap_api_output_formatter.Header, error) {
+	url := strings.Join([]string{c.baseURL, "API_SALES_SCHEDULING_AGREEMENT", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithHeader(req, schedulingAgreement)
+	c.getQueryWithHeader(req, salesSchedulingAgreement)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -144,6 +151,24 @@ func (c *SAPAPICaller) callToItem(url string) ([]sap_api_output_formatter.ToItem
 	return data, nil
 }
 
+func (c *SAPAPICaller) callToItemDeliverySchedule2(url string) ([]sap_api_output_formatter.ToItemDeliverySchedule, error) {
+	req, _ := http.NewRequest("GET", url, nil)
+	c.setHeaderAPIKeyAccept(req)
+
+	resp, err := new(http.Client).Do(req)
+	if err != nil {
+		return nil, xerrors.Errorf("API request error: %w", err)
+	}
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	data, err := sap_api_output_formatter.ConvertToToItemDeliverySchedule(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
 func (c *SAPAPICaller) callToItemScheduleLine2(url string) ([]sap_api_output_formatter.ToItemScheduleLine, error) {
 	req, _ := http.NewRequest("GET", url, nil)
 	c.setHeaderAPIKeyAccept(req)
@@ -162,7 +187,7 @@ func (c *SAPAPICaller) callToItemScheduleLine2(url string) ([]sap_api_output_for
 	return data, nil
 }
 
-func (c *SAPAPICaller) callToItemDeliveryAddresss2(url string) (*sap_api_output_formatter.ToItemDeliveryAddress, error) {
+func (c *SAPAPICaller) callToItemPricingElement2(url string) ([]sap_api_output_formatter.ToItemPricingElement, error) {
 	req, _ := http.NewRequest("GET", url, nil)
 	c.setHeaderAPIKeyAccept(req)
 
@@ -173,43 +198,50 @@ func (c *SAPAPICaller) callToItemDeliveryAddresss2(url string) (*sap_api_output_
 	defer resp.Body.Close()
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-	data, err := sap_api_output_formatter.ConvertToToItemDeliveryAddress(byteArray, c.log)
+	data, err := sap_api_output_formatter.ConvertToToItemPricingElement(byteArray, c.log)
 	if err != nil {
 		return nil, xerrors.Errorf("convert error: %w", err)
 	}
 	return data, nil
 }
 
-func (c *SAPAPICaller) Item(schedulingAgreement, schedulingAgreementItem string) {
-	itemData, err := c.callPurchaseSchedulingAgreementSrvAPIRequirementItem("A_SchAgrmtItem", schedulingAgreement, schedulingAgreementItem)
+func (c *SAPAPICaller) Item(salesSchedulingAgreement, salesSchedulingAgreementItem string) {
+	itemData, err := c.callSalesSchedulingAgreementSrvAPIRequirementItem("A_SalesSchedgAgrmtItem", salesSchedulingAgreement, salesSchedulingAgreementItem)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
 	c.log.Info(itemData)
 
-	itemScheduleLineData, err := c.callToItemScheduleLine(itemData[0].ToItemScheduleLine)
+	itemDeliveryScheduleData, err := c.callToItemDeliverySchedule(itemData[0].ToItemDeliverySchedule)
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+	c.log.Info(itemDeliveryScheduleData)
+
+	itemScheduleLineData, err := c.callToItemScheduleLine(itemDeliveryScheduleData[0].ToItemScheduleLine)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
 	c.log.Info(itemScheduleLineData)
 
-	itemDeliveryAddressData, err := c.callToItemDeliveryAddress(itemData[0].ToItemDeliveryAddress)
+	itemPricingElementData, err := c.callToItemPricingElement(itemData[0].ToItemPricingElement)
 	if err != nil {
 		c.log.Error(err)
 		return
 	}
-	c.log.Info(itemDeliveryAddressData)	
+	c.log.Info(itemPricingElementData)
 
 }
 
-func (c *SAPAPICaller) callPurchaseSchedulingAgreementSrvAPIRequirementItem(api, schedulingAgreement, schedulingAgreementItem string) ([]sap_api_output_formatter.Item, error) {
-	url := strings.Join([]string{c.baseURL, "API_SCHED_AGRMT_PROCESS_SRV", api}, "/")
+func (c *SAPAPICaller) callSalesSchedulingAgreementSrvAPIRequirementItem(api, salesSchedulingAgreement, salesSchedulingAgreementItem string) ([]sap_api_output_formatter.Item, error) {
+	url := strings.Join([]string{c.baseURL, "API_SALES_SCHEDULING_AGREEMENT", api}, "/")
 	req, _ := http.NewRequest("GET", url, nil)
 
 	c.setHeaderAPIKeyAccept(req)
-	c.getQueryWithItem(req, schedulingAgreement, schedulingAgreementItem)
+	c.getQueryWithItem(req, salesSchedulingAgreement, salesSchedulingAgreementItem)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -219,6 +251,24 @@ func (c *SAPAPICaller) callPurchaseSchedulingAgreementSrvAPIRequirementItem(api,
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
 	data, err := sap_api_output_formatter.ConvertToItem(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
+func (c *SAPAPICaller) callToItemDeliverySchedule(url string) ([]sap_api_output_formatter.ToItemDeliverySchedule, error) {
+	req, _ := http.NewRequest("GET", url, nil)
+	c.setHeaderAPIKeyAccept(req)
+
+	resp, err := new(http.Client).Do(req)
+	if err != nil {
+		return nil, xerrors.Errorf("API request error: %w", err)
+	}
+	defer resp.Body.Close()
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	data, err := sap_api_output_formatter.ConvertToToItemDeliverySchedule(byteArray, c.log)
 	if err != nil {
 		return nil, xerrors.Errorf("convert error: %w", err)
 	}
@@ -243,7 +293,7 @@ func (c *SAPAPICaller) callToItemScheduleLine(url string) ([]sap_api_output_form
 	return data, nil
 }
 
-func (c *SAPAPICaller) callToItemDeliveryAddress(url string) (*sap_api_output_formatter.ToItemDeliveryAddress, error) {
+func (c *SAPAPICaller) callToItemPricingElement(url string) ([]sap_api_output_formatter.ToItemPricingElement, error) {
 	req, _ := http.NewRequest("GET", url, nil)
 	c.setHeaderAPIKeyAccept(req)
 
@@ -254,7 +304,7 @@ func (c *SAPAPICaller) callToItemDeliveryAddress(url string) (*sap_api_output_fo
 	defer resp.Body.Close()
 
 	byteArray, _ := ioutil.ReadAll(resp.Body)
-	data, err := sap_api_output_formatter.ConvertToToItemDeliveryAddress(byteArray, c.log)
+	data, err := sap_api_output_formatter.ConvertToToItemPricingElement(byteArray, c.log)
 	if err != nil {
 		return nil, xerrors.Errorf("convert error: %w", err)
 	}
@@ -266,14 +316,14 @@ func (c *SAPAPICaller) setHeaderAPIKeyAccept(req *http.Request) {
 	req.Header.Set("Accept", "application/json")
 }
 
-func (c *SAPAPICaller) getQueryWithHeader(req *http.Request, schedulingAgreement string) {
+func (c *SAPAPICaller) getQueryWithHeader(req *http.Request, salesSchedulingAgreement string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("SchedulingAgreement eq '%s'", schedulingAgreement))
+	params.Add("$filter", fmt.Sprintf("SalesSchedulingAgreement eq '%s'", salesSchedulingAgreement))
 	req.URL.RawQuery = params.Encode()
 }
 
-func (c *SAPAPICaller) getQueryWithItem(req *http.Request, schedulingAgreement, schedulingAgreementItem string) {
+func (c *SAPAPICaller) getQueryWithItem(req *http.Request, salesSchedulingAgreement, salesSchedulingAgreementItem string) {
 	params := req.URL.Query()
-	params.Add("$filter", fmt.Sprintf("SchedulingAgreement eq '%s' and SchedulingAgreementItem eq '%s'", schedulingAgreement, schedulingAgreementItem))
+	params.Add("$filter", fmt.Sprintf("SalesSchedulingAgreement eq '%s' and SalesSchedulingAgreementItem eq '%s'", salesSchedulingAgreement, salesSchedulingAgreementItem))
 	req.URL.RawQuery = params.Encode()
 }

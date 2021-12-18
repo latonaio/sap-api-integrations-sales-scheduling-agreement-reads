@@ -47,19 +47,19 @@ type EC_MC struct {
 	Supplier                          string `json:"plant/supplier"`
 	Stock                             string `json:"stock"`
 	PurchasingDocumentCategory        string `json:"document_type"`
-	PSANumber                          string `json:"document_no"`
+	SSANumber                         string `json:"document_no"`
 	ScheduleLineDeliveryDate          string `json:"planned_date"`
 	ValidatedDate                     string `json:"validated_date"`
     Deleted                           bool   `json:"deleted"`
 }
 
 type SDC struct {
-	ConnectionKey               string `json:"connection_key"`
-	Result                      bool   `json:"result"`
-	RedisKey                    string `json:"redis_key"`
-	Filepath                    string `json:"filepath"`
-	PurchaseSchedulingAgreement struct {
-		SchedulingAgreement            string `json:"SchedulingAgreement"`
+	ConnectionKey            string `json:"connection_key"`
+	Result                   bool   `json:"result"`
+	RedisKey                 string `json:"redis_key"`
+	Filepath                 string `json:"filepath"`
+	SalesSchedulingAgreement struct {
+		SalesSchedulingAgreement       string `json:"SalesSchedulingAgreement"`
 		CompanyCode                    string `json:"CompanyCode"`
 		PurchasingDocumentCategory     string `json:"PurchasingDocumentCategory"`
 		PurchasingDocumentType         string `json:"PurchasingDocumentType"`
@@ -85,17 +85,17 @@ type SDC struct {
 		InvoicingParty                 string `json:"InvoicingParty"`
 		SchedulingAgreementStatus      string `json:"SchedulingAgreementStatus"`
 		HeaderPartner                  struct {
-			SchedulingAgreementItem string      `json:"SchedulingAgreementItem"`
-			PurchasingOrganization  string      `json:"PurchasingOrganization"`
-			SupplierSubrange        string      `json:"SupplierSubrange"`
-			Plant                   string      `json:"Plant"`
-			PartnerFunction         string      `json:"PartnerFunction"`
-			PartnerCounter          string      `json:"PartnerCounter"`
-			Supplier                string      `json:"Supplier"`
-			DefaultPartner          interface{} `json:"DefaultPartner"`
+			SalesSchedulingAgreementItem string      `json:"SalesSchedulingAgreementItem"`
+			PurchasingOrganization       string      `json:"PurchasingOrganization"`
+			SupplierSubrange             string      `json:"SupplierSubrange"`
+			Plant                        string      `json:"Plant"`
+			PartnerFunction              string      `json:"PartnerFunction"`
+			PartnerCounter               string      `json:"PartnerCounter"`
+			Supplier                     string      `json:"Supplier"`
+			DefaultPartner               interface{} `json:"DefaultPartner"`
 		} `json:"HeaderPartner"`
-		PurchaseSchedulingAgreementItem struct {
-			SchedulingAgreementItem        string      `json:"SchedulingAgreementItem"`
+		SalesSchedulingAgreementItem struct {
+			SalesSchedulingAgreementItem   string      `json:"SalesSchedulingAgreementItem"`
 			CompanyCode                    string      `json:"CompanyCode"`
 			PurchasingDocumentCategory     string      `json:"PurchasingDocumentCategory"`
 			PurchasingDocumentItemCategory string      `json:"PurchasingDocumentItemCategory"`
@@ -159,10 +159,10 @@ type SDC struct {
 				PhoneNumber            string `json:"PhoneNumber"`
 				FaxNumber              string `json:"FaxNumber"`
 			} `json:"ItemDeliveryAddress"`
-		} `json:"PurchaseSchedulingAgreementItem"`
-	} `json:"PurchaseSchedulingAgreement"`
-	APISchema                   string   `json:"api_schema"`
-	Accepter                    []string `json:"accepter"`
-	PSANumber                   string   `json:"purchase_scheduling_agreement"`
-	Deleted                     bool     `json:"deleted"`
+		} `json:"SalesSchedulingAgreementItem"`
+	} `json:"SalesSchedulingAgreement"`
+	APISchema                string   `json:"api_schema"`
+	Accepter                 []string `json:"accepter"`
+	SSANumber                string   `json:"sales_scheduling_agreement"`
+	Deleted                  bool     `json:"deleted"`
 }

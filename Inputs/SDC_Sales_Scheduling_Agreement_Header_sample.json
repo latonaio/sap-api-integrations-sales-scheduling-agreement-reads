@@ -3,8 +3,8 @@
 	"result": true,
 	"redis_key": "abcdefg",
 	"filepath": "/var/lib/aion/Data/rededge_sdc/abcdef.json",
-	"PurchaseSchedulingAgreement": {
-		"SchedulingAgreement": "5500000000",
+	"SalesSchedulingAgreement": {
+		"SalesSchedulingAgreement": "30000001",
 		"CompanyCode": "",
 		"PurchasingDocumentCategory": "",
 		"PurchasingDocumentType": "",
@@ -30,7 +30,7 @@
 		"InvoicingParty": "",
 		"SchedulingAgreementStatus": "",
 		"HeaderPartner": {
-			"SchedulingAgreementItem": "",
+			"SalesSchedulingAgreementItem": "",
 			"PurchasingOrganization": "",
 			"SupplierSubrange": "",
 			"Plant": "",
@@ -39,8 +39,8 @@
 			"Supplier": "",
 			"DefaultPartner": null
 		},
-		"PurchaseSchedulingAgreementItem": {
-			"SchedulingAgreementItem": "",
+		"SalesSchedulingAgreementItem": {
+			"SalesSchedulingAgreementItem": "",
 			"CompanyCode": "",
 			"PurchasingDocumentCategory": "",
 			"PurchasingDocumentItemCategory": "",
@@ -106,8 +106,8 @@
 			}
 		}
 	},
-	"api_schema": "sap.s4.beh.schedulingagreement.v1.SchedulingAgreement.Created.v1",
+	"api_schema": "sap.s4.beh.salesschedulingagreement.v1.SalesSchedulingAgreement.Created.v1",
 	"accepter": ["Header"],
-	"purchase_scheduling_agreement": "5500000000",
+	"sales_scheduling_agreement": "30000001",
 	"deleted": false
 }

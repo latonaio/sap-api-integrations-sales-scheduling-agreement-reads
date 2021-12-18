@@ -1,0 +1,33 @@
+{
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-sales-scheduling-agreement-reads/SAP_API_Caller/caller.go#L228",
+	"function": "sap-api-integrations-sales-scheduling-agreement-reads/SAP_API_Caller.(*SAPAPICaller).Item",
+	"level": "INFO",
+	"message": [
+		{
+			"SalesSchedulingAgreement": "30000001",
+			"SalesSchedulingAgreementItem": "10",
+			"ScheduleLine": "1",
+			"SchedulingAgreementReleaseType": "1",
+			"ScheduleLineCategory": "E4",
+			"OrderQuantityUnit": "EA",
+			"SalesDelivDateCategory": "1",
+			"RequestedDeliveryDate": "/Date(1621468800000)/",
+			"RequestedDeliveryTime": "PT00H00M00S",
+			"ScheduleLineOrderQuantity": "1000",
+			"CorrectedQtyInOrderQtyUnit": "1000",
+			"ScheduleLineOpenQuantity": "997",
+			"ConfdOrderQtyByMatlAvailCheck": "1000",
+			"ProductAvailabilityDate": "/Date(1621468800000)/",
+			"ProductAvailabilityTime": "PT00H00M00S",
+			"DelivBlockReasonForSchedLine": "",
+			"TransportationPlanningDate": "/Date(1621468800000)/",
+			"TransportationPlanningTime": "PT00H00M00S",
+			"GoodsIssueDate": "/Date(1621468800000)/",
+			"LoadingDate": "/Date(1621468800000)/",
+			"GoodsIssueTime": "PT00H00M00S",
+			"LoadingTime": "PT00H00M00S",
+			"GoodsMovementType": "631"
+		}
+	],
+	"time": "2021-12-18T16:27:22.500415+09:00"
+}
