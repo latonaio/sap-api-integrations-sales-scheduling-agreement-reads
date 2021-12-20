@@ -25,7 +25,7 @@ sap-api-integrations-sales-scheduling-agreement-reads が対応する APIサー�
 sap-api-integrations-sales-scheduling-agreement-reads には、次の API をコールするためのリソースが含まれています。  
 
 * A_SchAgrmtHeader（販売分納契約 - ヘッダ）※販売分納契約の詳細データを取得するために、ToHeaderPartner、ToItem、ToItemScheduleLine、と合わせて利用されます。
-* A_SchAgrmtItem（販売分納契約 - 明細）※購買分納契約明細の詳細データを取得するために、ToItemScheduleLine、と合わせて利用されます。
+* A_SchAgrmtItem（販売分納契約 - 明細）※販売分納契約明細の詳細データを取得するために、ToItemScheduleLine、と合わせて利用されます。
 * ToHeaderPartner（販売分納契約 - ヘッダ取引先）
 * ToItem（販売分納契約 - 明細）
 * ToItemScheduleLine（販売分納契約 - 明細納入日程行）
