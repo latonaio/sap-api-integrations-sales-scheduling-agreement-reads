@@ -32,7 +32,6 @@ type Header struct {
 	PricingDate                   string      `json:"PricingDate"`
 	ShippingType                  string      `json:"ShippingType"`
 	ShippingCondition             string      `json:"ShippingCondition"`
-	IncotermsVersion              string      `json:"IncotermsVersion"`
 	DeliveryBlockReason           string      `json:"DeliveryBlockReason"`
 	DelivSchedTypeMRPRlvnceCode   string      `json:"DelivSchedTypeMRPRlvnceCode"`
 	AgrmtValdtyStartDate          string      `json:"AgrmtValdtyStartDate"`

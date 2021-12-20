@@ -47,7 +47,6 @@ func ConvertToHeader(raw []byte, l *logger.Logger) ([]Header, error) {
 	PricingDate:                   data.PricingDate,
 	ShippingType:                  data.ShippingType,
 	ShippingCondition:             data.ShippingCondition,
-	IncotermsVersion:              data.IncotermsVersion,
 	DeliveryBlockReason:           data.DeliveryBlockReason,
 	DelivSchedTypeMRPRlvnceCode:   data.DelivSchedTypeMRPRlvnceCode,
 	AgrmtValdtyStartDate:          data.AgrmtValdtyStartDate,
