@@ -11,23 +11,23 @@
 			"ScheduleLineCategory": "E4",
 			"OrderQuantityUnit": "EA",
 			"SalesDelivDateCategory": "1",
-			"RequestedDeliveryDate": "/Date(1621468800000)/",
+			"RequestedDeliveryDate": "2021-05-20T09:00:00+09:00",
 			"RequestedDeliveryTime": "PT00H00M00S",
 			"ScheduleLineOrderQuantity": "1000",
 			"CorrectedQtyInOrderQtyUnit": "1000",
 			"ScheduleLineOpenQuantity": "997",
 			"ConfdOrderQtyByMatlAvailCheck": "1000",
-			"ProductAvailabilityDate": "/Date(1621468800000)/",
+			"ProductAvailabilityDate": "2021-05-20T09:00:00+09:00",
 			"ProductAvailabilityTime": "PT00H00M00S",
 			"DelivBlockReasonForSchedLine": "",
-			"TransportationPlanningDate": "/Date(1621468800000)/",
+			"TransportationPlanningDate": "2021-05-20T09:00:00+09:00",
 			"TransportationPlanningTime": "PT00H00M00S",
-			"GoodsIssueDate": "/Date(1621468800000)/",
-			"LoadingDate": "/Date(1621468800000)/",
+			"GoodsIssueDate": "2021-05-20T09:00:00+09:00",
+			"LoadingDate": "2021-05-20T09:00:00+09:00",
 			"GoodsIssueTime": "PT00H00M00S",
 			"LoadingTime": "PT00H00M00S",
 			"GoodsMovementType": "631"
 		}
 	],
-	"time": "2021-12-18T16:27:22.500415+09:00"
+	"time": "2022-01-27T22:45:24+09:00"
 }

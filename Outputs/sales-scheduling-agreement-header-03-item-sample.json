@@ -7,7 +7,7 @@
 			"SalesSchedulingAgreement": "30000001",
 			"SalesSchedulingAgreementItem": "10",
 			"SalesSchedgAgrmtItemCategory": "LKN",
-			"LastChangeDate": "/Date(1627603200000)/",
+			"LastChangeDate": "2021-07-30T09:00:00+09:00",
 			"Material": "MZ-FG-AU-JIT01",
 			"MaterialByCustomer": "KDMAT-AU-JIT-01",
 			"MaterialGroup": "",
@@ -26,7 +26,7 @@
 			"NetPriceQuantity": "1",
 			"NetPriceQuantityUnit": "EA",
 			"TransactionCurrency": "USD",
-			"PricingDate": "/Date(1621468800000)/",
+			"PricingDate": "2021-05-20T09:00:00+09:00",
 			"ShippingPoint": "1710",
 			"ShippingType": "",
 			"DeliveryPriority": "0",
@@ -42,5 +42,5 @@
 			"to_SalesSchedgAgrmtDelivSched": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_SCHEDULING_AGREEMENT/A_SalesSchedgAgrmtItem(SalesSchedulingAgreement='30000001',SalesSchedulingAgreementItem='10')/to_SalesSchedgAgrmtDelivSched"
 		}
 	],
-	"time": "2021-12-18T16:24:38.987938+09:00"
+	"time": "2022-01-27T22:43:36+09:00"
 }

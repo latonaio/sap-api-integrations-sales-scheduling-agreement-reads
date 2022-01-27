@@ -6,7 +6,7 @@
 		{
 			"SalesSchedulingAgreement": "30000001",
 			"SalesSchedgAgrmtType": "LKJ",
-			"CreationDate": "/Date(1621468800000)/",
+			"CreationDate": "2021-05-20T09:00:00+09:00",
 			"LastChangeDate": "",
 			"SalesOrganization": "1710",
 			"DistributionChannel": "10",
@@ -14,7 +14,7 @@
 			"SalesGroup": "",
 			"SalesOffice": "",
 			"SoldToParty": "USCU_AU2",
-			"SalesSchedgAgrmtDate": "/Date(1621468800000)/",
+			"SalesSchedgAgrmtDate": "2021-05-20T09:00:00+09:00",
 			"SDDocumentReason": "",
 			"PurchaseOrderByCustomer": "AU2-PO-JIT-001",
 			"CustomerPurchaseOrderType": "",
@@ -22,10 +22,9 @@
 			"SalesDistrict": "",
 			"TotalNetAmount": "210000.00",
 			"TransactionCurrency": "USD",
-			"PricingDate": "/Date(1621468800000)/",
+			"PricingDate": "2021-05-20T09:00:00+09:00",
 			"ShippingType": "",
 			"ShippingCondition": "01",
-			"IncotermsVersion": "",
 			"DeliveryBlockReason": "09",
 			"DelivSchedTypeMRPRlvnceCode": "E",
 			"AgrmtValdtyStartDate": "",
@@ -44,5 +43,5 @@
 			"to_SchedgAgrmtItm": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_SCHEDULING_AGREEMENT/A_SalesSchedgAgrmt('30000001')/to_Item"
 		}
 	],
-	"time": "2021-12-18T16:24:37.196603+09:00"
+	"time": "2022-01-27T22:43:34+09:00"
 }

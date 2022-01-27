@@ -96,9 +96,9 @@ func (c *SAPAPICaller) AsyncGetSalesSchedulingAgreement(salesSchedulingAgreement
 }
 ```
 ## Output  
-本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
+本マイクロサービスでは、[golang-logging-library-for-sap](https://github.com/latonaio/golang-logging-library-for-sap) により、以下のようなデータがJSON形式で出力されます。  
 以下の sample.json の例は、SAP 販売分納契約 の ヘッダデータ が取得された結果の JSON の例です。  
-以下の項目のうち、"SalesSchedulingAgreement" ～ "to_SchedgAgrmtItm" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
+以下の項目のうち、"SalesSchedulingAgreement" ～ "to_SchedgAgrmtItm" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library-for-sap による 定型フォーマットの出力結果です。  
 
 ```
 {
@@ -109,7 +109,7 @@ func (c *SAPAPICaller) AsyncGetSalesSchedulingAgreement(salesSchedulingAgreement
 		{
 			"SalesSchedulingAgreement": "30000001",
 			"SalesSchedgAgrmtType": "LKJ",
-			"CreationDate": "/Date(1621468800000)/",
+			"CreationDate": "2021-05-20T09:00:00+09:00",
 			"LastChangeDate": "",
 			"SalesOrganization": "1710",
 			"DistributionChannel": "10",
@@ -117,7 +117,7 @@ func (c *SAPAPICaller) AsyncGetSalesSchedulingAgreement(salesSchedulingAgreement
 			"SalesGroup": "",
 			"SalesOffice": "",
 			"SoldToParty": "USCU_AU2",
-			"SalesSchedgAgrmtDate": "/Date(1621468800000)/",
+			"SalesSchedgAgrmtDate": "2021-05-20T09:00:00+09:00",
 			"SDDocumentReason": "",
 			"PurchaseOrderByCustomer": "AU2-PO-JIT-001",
 			"CustomerPurchaseOrderType": "",
@@ -125,10 +125,9 @@ func (c *SAPAPICaller) AsyncGetSalesSchedulingAgreement(salesSchedulingAgreement
 			"SalesDistrict": "",
 			"TotalNetAmount": "210000.00",
 			"TransactionCurrency": "USD",
-			"PricingDate": "/Date(1621468800000)/",
+			"PricingDate": "2021-05-20T09:00:00+09:00",
 			"ShippingType": "",
 			"ShippingCondition": "01",
-			"IncotermsVersion": "",
 			"DeliveryBlockReason": "09",
 			"DelivSchedTypeMRPRlvnceCode": "E",
 			"AgrmtValdtyStartDate": "",
@@ -147,6 +146,7 @@ func (c *SAPAPICaller) AsyncGetSalesSchedulingAgreement(salesSchedulingAgreement
 			"to_SchedgAgrmtItm": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_SCHEDULING_AGREEMENT/A_SalesSchedgAgrmt('30000001')/to_Item"
 		}
 	],
-	"time": "2021-12-18T16:24:37.196603+09:00"
+	"time": "2022-01-27T22:43:34+09:00"
 }
+
 ```
